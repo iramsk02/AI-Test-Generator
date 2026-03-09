@@ -1,5 +1,5 @@
 import * as github from "@actions/github";
-import { Octokit } from "@octokit/action";
+import { Octokit } from "octokit";
 import * as core from "@actions/core";
 
 export class GitHubService {
