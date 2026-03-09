@@ -1,13 +1,12 @@
 import * as github from "@actions/github";
-import { Octokit } from "octokit";
 import * as core from "@actions/core";
 
 export class GitHubService {
-    private octokit: Octokit;
+    private octokit: ReturnType<typeof github.getOctokit>;
     private repo: { owner: string; repo: string };
 
     constructor(token: string) {
-        this.octokit = new Octokit({ auth: token });
+        this.octokit = github.getOctokit(token);
         this.repo = github.context.repo;
     }
 
