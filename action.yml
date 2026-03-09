@@ -16,11 +16,11 @@ runs:
       with:
         node-version: '20'
     - name: Install dependencies
-      run: npm install && npm install -g ts-node
+      run: npm install && npm install -g tsx
       shell: bash
       working-directory: ${{ github.action_path }}
     - name: Run AI Test Generator
-      run: npx ts-node src/main.ts
+      run: npx tsx src/main.ts
       shell: bash
       working-directory: ${{ github.action_path }}
       env:
