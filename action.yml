@@ -1,0 +1,29 @@
+name: 'AI Test Generator'
+description: 'Automatically generates Playwright E2E tests based on your PR diff and raises a new PR for human review.'
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub Token for posting comments and creating PRs'
+    required: true
+  GROQ_API_KEY:
+    description: 'API Key for Groq AI'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+    - name: Install dependencies
+      run: npm install && npm install -g ts-node
+      shell: bash
+      working-directory: ${{ github.action_path }}
+    - name: Run AI Test Generator
+      run: npx ts-node src/main.ts
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        GROQ_API_KEY: ${{ inputs.GROQ_API_KEY }}
+
