@@ -5,8 +5,12 @@ import { AITestAgent } from "./ai_agent.js";
 
 async function run() {
     try {
-        const groqApiKey = core.getInput("GROQ_API_KEY", { required: true });
-        const githubToken = core.getInput("GITHUB_TOKEN", { required: true });
+        const groqApiKey = core.getInput("GROQ_API_KEY") || process.env.GROQ_API_KEY;
+        const githubToken = core.getInput("GITHUB_TOKEN") || process.env.GITHUB_TOKEN;
+
+        if (!groqApiKey || !githubToken) {
+            throw new Error("Missing required inputs: GROQ_API_KEY or GITHUB_TOKEN");
+        }
 
         const context = github.context;
         if (!context.payload.pull_request) {
